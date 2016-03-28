@@ -1,0 +1,1 @@
+<h1>Try mongoose for Node.js authentication</h1>
