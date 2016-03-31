@@ -13,7 +13,8 @@ exports.signup = function(req, res, next) {
     const email = req.body.email;
     const password = req.body.password;
 
-    if (!email || !!password) {
+    if (!email || !password)
+    {
         return res.status(422).send({ error: 'You must provide email and password.' });
     }
 
@@ -30,8 +31,8 @@ exports.signup = function(req, res, next) {
         }
 
         // if a user with email does NOT exist, create and save user record, then respond to request indicating the user was created
-        const user = new UserModelClass({email: email, password: password});
-        user.save(function(err) {
+        const newUser = new UserModelClass({email: email, password: password});
+        newUser.save(function(err) {
             if (err) { return next(err); }
 
             // respond to the request
