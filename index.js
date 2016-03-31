@@ -4,10 +4,14 @@
 
 const app = require('express')();
 const router = require('./router');     // the routes that we wrote
+const mongoose = require('mongoose');
 
 
-// app setup
-// middleware
+// DB setup
+mongoose.connect('mongodb://localhost:auth/auth');      // locally hosted mongodb. creates a new db. db name: auth
+
+
+// app setup and middleware.
 app.use(require('morgan')('combined'));                // morgan logs stuff. for debugging.
 app.use(require('body-parser').json({ type: '*/*' }));  // parse everything as json
 router(app);
