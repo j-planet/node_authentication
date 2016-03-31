@@ -2,8 +2,23 @@
  * Created by jj on 3/28/16.
  */
 
+const jwt = require('jwt-simple');
+const config = require('../config');
 const UserModelClass = require('../models/user');
 
+
+// generate token for a user based on the user id and time of creation
+function tokenForUser(user) {
+    const timestamp = new Date().getTime();
+
+    // sub = "subject", iat = "issue at time
+    return jwt.encode(
+        {
+            sub: user.id,
+            iat: timestamp
+        }
+        , config.secret);
+}
 
 exports.signup = function(req, res, next) {
 
@@ -36,7 +51,7 @@ exports.signup = function(req, res, next) {
             if (err) { return next(err); }
 
             // respond to the request
-            res.json({ success: true});
+            res.json({ token: tokenForUser(newUser) });
         });
     });
 };
