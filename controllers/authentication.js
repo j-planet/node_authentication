@@ -55,3 +55,14 @@ exports.signup = function(req, res, next) {
         });
     });
 };
+
+
+// already checked username + password, give them a token
+exports.signin = function(req, res, next) {
+
+    console.log(req.body);
+    console.log(req.user);
+    console.log(req);
+
+    res.send({ token: tokenForUser(req.user) });
+};
